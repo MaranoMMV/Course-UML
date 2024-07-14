@@ -7,8 +7,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.cursomc.domain.entity.Categoria;
+import com.cursomc.domain.entity.Cidade;
+import com.cursomc.domain.entity.Estado;
 import com.cursomc.domain.entity.Produto;
 import com.cursomc.repository.CategoriaRepository;
+import com.cursomc.repository.CidadeRepository;
+import com.cursomc.repository.EstadoRepository;
 import com.cursomc.repository.ProdutoRepository;
 
 @Configuration
@@ -18,6 +22,12 @@ public class Instantiation implements CommandLineRunner {
     
     @Autowired
     private ProdutoRepository produtoRepository;
+    
+    @Autowired
+    private EstadoRepository estadoRepository;
+    
+    @Autowired
+    private CidadeRepository cidadeRepository;
     
     @Override
     public void run(String... args) throws Exception {
@@ -50,5 +60,20 @@ public class Instantiation implements CommandLineRunner {
         
         // Salva as categorias novamente para atualizar as associações
         this.categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
+        
+        
+        Estado est1 = new Estado(null, "Minas gerais");
+        Estado est2 = new Estado(null, "São Paulo");
+        
+        Cidade c1 = new Cidade(null, "Uberlandia", est1);
+        Cidade c2 = new Cidade(null, "São Paulo", est2);
+        Cidade c3 = new Cidade(null, "Campinas", est2);
+        
+        est1.getCidades().addAll(Arrays.asList(c1));
+        est2.getCidades().addAll(Arrays.asList(c2,c3));
+        
+        this.estadoRepository.saveAll(Arrays.asList(est1, est2));
+        this.cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+        
     }
 }
