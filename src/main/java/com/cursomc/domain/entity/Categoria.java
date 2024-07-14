@@ -3,6 +3,9 @@ package com.cursomc.domain.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,12 +27,8 @@ public class Categoria {
 	
 	private String nome;
 	
-	 @ManyToMany
-	    @JoinTable(
-	        name = "categoria_produto", 
-	        joinColumns = @JoinColumn(name = "categoria_id"), 
-	        inverseJoinColumns = @JoinColumn(name = "produto_id")
-	    )
+	 @ManyToMany(mappedBy = "categorias")
+	 @JsonManagedReference
 	    private List<Produto> produtos = new ArrayList<>();
 	
 	public Categoria(Integer id, String nome) {

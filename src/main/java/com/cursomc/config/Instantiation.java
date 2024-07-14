@@ -21,10 +21,10 @@ public class Instantiation implements CommandLineRunner {
     
     @Override
     public void run(String... args) throws Exception {
-        // Deleta todas as categorias e produtos existentes
-        this.categoriaRepository.deleteAll();
-        this.produtoRepository.deleteAll();
-        
+//        // Deleta todas as categorias e produtos existentes
+//        this.categoriaRepository.deleteAll();
+//        this.produtoRepository.deleteAll();
+//        
         // Cria categorias
         Categoria cat1 = new Categoria(null, "Informatica");
         Categoria cat2 = new Categoria(null, "Escritorio");
