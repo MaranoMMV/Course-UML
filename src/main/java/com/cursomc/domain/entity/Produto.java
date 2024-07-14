@@ -16,27 +16,27 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Data
-public class Categoria {
+public class Produto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
 	private String nome;
+	private Double preco;
 	
-	 @ManyToMany
-	    @JoinTable(
-	        name = "categoria_produto", 
-	        joinColumns = @JoinColumn(name = "categoria_id"), 
-	        inverseJoinColumns = @JoinColumn(name = "produto_id")
-	    )
-	    private List<Produto> produtos = new ArrayList<>();
-	
-	public Categoria(Integer id, String nome) {
+	@ManyToMany
+	@JoinTable(
+			name="PRODUTO_CATEGORIA", 
+			joinColumns = @JoinColumn(name = "produto_id"),
+			inverseJoinColumns = @JoinColumn(name = "categoria_id")
+			)
+	private List<Categoria> categorias = new ArrayList<>();
+
+	public Produto(Integer id, String nome, Double preco) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.preco = preco;
 	}
-	
-	
+
 }
