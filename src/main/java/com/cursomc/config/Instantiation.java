@@ -12,6 +12,7 @@ import com.cursomc.domain.entity.Cidade;
 import com.cursomc.domain.entity.Cliente;
 import com.cursomc.domain.entity.Endereco;
 import com.cursomc.domain.entity.Estado;
+import com.cursomc.domain.entity.ItemPedido;
 import com.cursomc.domain.entity.Pagamento;
 import com.cursomc.domain.entity.PagamentoComBoleto;
 import com.cursomc.domain.entity.PagamentoComCartao;
@@ -24,6 +25,7 @@ import com.cursomc.repository.CidadeRepository;
 import com.cursomc.repository.ClienteRepository;
 import com.cursomc.repository.EnderecoRepository;
 import com.cursomc.repository.EstadoRepository;
+import com.cursomc.repository.ItemPedidoRepository;
 import com.cursomc.repository.PagamentoRepository;
 import com.cursomc.repository.PedidoRepository;
 import com.cursomc.repository.ProdutoRepository;
@@ -53,6 +55,8 @@ public class Instantiation implements CommandLineRunner {
     
     @Autowired
     private PagamentoRepository pagamentoRepository;
+    
+    @Autowired ItemPedidoRepository itemPedidoRepository;
     
     @Override
     public void run(String... args) throws Exception {
@@ -127,6 +131,20 @@ public class Instantiation implements CommandLineRunner {
         pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
        
         pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+        
+        ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+        ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+        ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+        
+        ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+        ped2.getItens().addAll(Arrays.asList(ip3));
+        
+        p1.getItens().addAll(Arrays.asList(ip1));
+        p2.getItens().addAll(Arrays.asList(ip3));
+        p3.getItens().addAll(Arrays.asList(ip2));
+        
+        this.itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+        
     
     }
 }
